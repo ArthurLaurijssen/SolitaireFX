@@ -10,7 +10,7 @@ public class SolitaireView extends BorderPane {
 
 
     private void initialiseNodes() {
-
+        this.layoutNodes(); //mag weg
     }
 
 
