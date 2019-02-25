@@ -1,4 +1,4 @@
-package be.kdg.solitaire.view;
+package be.kdg.solitaire.view.solitaire;
 
 import be.kdg.solitaire.model.SolitaireModel;
 

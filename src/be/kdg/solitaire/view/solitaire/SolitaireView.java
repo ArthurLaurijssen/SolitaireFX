@@ -1,4 +1,4 @@
-package be.kdg.solitaire.view;
+package be.kdg.solitaire.view.solitaire;
 
 import javafx.scene.layout.BorderPane;
 
@@ -10,7 +10,7 @@ public class SolitaireView extends BorderPane {
 
 
     private void initialiseNodes() {
-        this.layoutNodes(); //mag weg
+
     }
 
 
