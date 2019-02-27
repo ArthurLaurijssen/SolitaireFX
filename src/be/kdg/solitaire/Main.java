@@ -46,6 +46,5 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle(title);
         primaryStage.show();
-        Deck deck = new Deck();
     }
 }

@@ -22,15 +22,11 @@ public class CardPNG {
             ranksCharacterHashMap.put(rank,RANKS[i++]);
         }
         for (Card card: cards) {
-            System.out.println(card.getRank());
             String source = "/images/" + ranksCharacterHashMap.get(card.getRank()) + suitsHashMap.get(card.getSuit()) + ".png";
-            System.out.println(source);
             Image img = new Image(source);
-            //imageMap.put(card,img);
+            imageMap.put(card,img);
         }
     }
-
-
     public Image getimage(Card card) {
         return imageMap.getOrDefault(card, null);
     }

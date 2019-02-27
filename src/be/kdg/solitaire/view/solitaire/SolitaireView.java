@@ -7,8 +7,6 @@ public class SolitaireView extends BorderPane {
         this.initialiseNodes();
         this.layoutNodes();
     }
-
-
     private void initialiseNodes() {
 
     }

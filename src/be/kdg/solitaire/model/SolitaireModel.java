@@ -1,7 +1,15 @@
 package be.kdg.solitaire.model;
 
-public class SolitaireModel {
-    public SolitaireModel() {
+import be.kdg.solitaire.model.Cards.Deck;
 
+public class SolitaireModel {
+    private Deck deck;
+    public SolitaireModel() {
+        deck = new Deck();
+        deck.shuffle();
+    }
+
+    public SolitaireModel(Deck deck) {
+        this.deck = deck;
     }
 }

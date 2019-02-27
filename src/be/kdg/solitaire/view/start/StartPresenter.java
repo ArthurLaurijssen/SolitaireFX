@@ -2,6 +2,8 @@ package be.kdg.solitaire.view.start;
 
 
 import be.kdg.solitaire.model.SolitaireModel;
+import be.kdg.solitaire.view.solitaire.SolitairePresenter;
+import be.kdg.solitaire.view.solitaire.SolitaireView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,7 +25,14 @@ public class StartPresenter {
                 Platform.exit();
             }
         });
-
+        view.getBtnNewGame().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SolitaireView solitaireView = new SolitaireView();
+                new SolitairePresenter(solitaireView,model);
+                view.getScene().setRoot(solitaireView);
+            }
+        });
 
     }
     private void updateView() {
