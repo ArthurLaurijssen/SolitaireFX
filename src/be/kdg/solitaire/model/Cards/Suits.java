@@ -1,4 +1,4 @@
-package be.kdg.solitaire.Cards;
+package be.kdg.solitaire.model.Cards;
 
 public enum Suits {
     SCHOPPEN,HARTEN,KLAVEREN,RUITEN;

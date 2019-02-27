@@ -34,17 +34,17 @@ public class StartView extends BorderPane {
         this.setRight(this.vbox);
         this.hbox.setAlignment(Pos.CENTER);
         this.lblHighScores.setPadding(new Insets(10,150,40,100));
-        this.setPadding(new Insets(20,20,40,150));
-        this.btnNewGame.setPadding(new Insets(20));
-        this.btnExit.setPadding(new Insets(20));
+        this.setPadding(new Insets(20,20,40,100));
+        this.btnNewGame.setPadding(new Insets(15));
+        this.btnExit.setPadding(new Insets(15));
 
     }
 
-    public Button getBtnNewGame() {
+    Button getBtnNewGame() {
         return btnNewGame;
     }
 
-    public Button getBtnExit() {
+    Button getBtnExit() {
         return btnExit;
     }
 }

@@ -1,4 +1,4 @@
-package be.kdg.solitaire.Cards;
+package be.kdg.solitaire.model.Cards;
 
 public class Card {
     private  final Suits suit;
@@ -8,11 +8,11 @@ public class Card {
         this.suit = suit;
         this.rank = rank;
     }
-    public Suits getSuit() {
+     Suits getSuit() {
         return suit;
     }
 
-    public Ranks getRank() {
+    Ranks getRank() {
         return rank;
     }
     public boolean kanErop(Card card) {

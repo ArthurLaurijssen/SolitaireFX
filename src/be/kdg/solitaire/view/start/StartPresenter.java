@@ -2,6 +2,9 @@ package be.kdg.solitaire.view.start;
 
 
 import be.kdg.solitaire.model.SolitaireModel;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class StartPresenter {
     private SolitaireModel model;
@@ -14,6 +17,13 @@ public class StartPresenter {
         this.updateView();
     }
     private void addEventHandlers() {
+        view.getBtnExit().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Platform.exit();
+            }
+        });
+
 
     }
     private void updateView() {

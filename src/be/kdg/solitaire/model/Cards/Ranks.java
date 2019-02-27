@@ -1,4 +1,4 @@
-package be.kdg.solitaire.Cards;
+package be.kdg.solitaire.model.Cards;
 
 public enum Ranks {
     AAS,TWEE,DRIE,VIER,VIJF,ZES,ZEVEN,ACHT,NEGEN,TIEN,BOER,VROUW,KONING;
