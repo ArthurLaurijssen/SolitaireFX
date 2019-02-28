@@ -18,7 +18,7 @@ public class SolitaireView extends GridPane {
         add(new StapelPane(Stapels.VIER,model.getDeck()),3,0);
         add(new StapelPane(Stapels.VIJF,model.getDeck()),4,0);
         add(new StapelPane(Stapels.ZES,model.getDeck()),5,0);
-        //add(new StapelPane(Stapels.ZEVEN,model.getDeck()),6,0);
+        add(new StapelPane(Stapels.ZEVEN,model.getDeck()),6,0);
         /*StackPane st = new StackPane();
         ImageView imgv = new ImageView(new Image("/images/TC.png"));
         ImageView imgv2 = new ImageView(model.getDeck().getImages().getBack());
