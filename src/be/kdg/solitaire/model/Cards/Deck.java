@@ -23,6 +23,7 @@ public class Deck {
         this.shuffle();
         images = new CardPNG(cards);
         card=0;
+        System.out.println(cards.size());
     }
 
     public void shuffle() {

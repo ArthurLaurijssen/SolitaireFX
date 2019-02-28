@@ -1,12 +1,7 @@
 package be.kdg.solitaire.view.solitaire;
-
-import be.kdg.solitaire.model.Cards.Deck;
 import be.kdg.solitaire.model.Cards.Stapels;
 import be.kdg.solitaire.model.SolitaireModel;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 
 public class SolitaireView extends GridPane {
     SolitaireModel model;
@@ -23,6 +18,7 @@ public class SolitaireView extends GridPane {
         add(new StapelPane(Stapels.VIER,model.getDeck()),3,0);
         add(new StapelPane(Stapels.VIJF,model.getDeck()),4,0);
         add(new StapelPane(Stapels.ZES,model.getDeck()),5,0);
+        add(new StapelPane(Stapels.ZEVEN,model.getDeck()),6,0);
         //add(new StapelPane(Stapels.ZEVEN,model.getDeck()),6,0);
         /*StackPane st = new StackPane();
         ImageView imgv = new ImageView(new Image("/images/TC.png"));
