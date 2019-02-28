@@ -12,4 +12,8 @@ public class SolitaireModel {
     public SolitaireModel(Deck deck) {
         this.deck = deck;
     }
+
+    public Deck getDeck() {
+        return deck;
+    }
 }

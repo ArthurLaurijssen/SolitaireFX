@@ -7,6 +7,7 @@ public class Card {
     Card(Suits suit, Ranks rank) {
         this.suit = suit;
         this.rank = rank;
+
     }
      Suits getSuit() {
         return suit;

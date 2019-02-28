@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Deck {
     private List<Card> cards = new ArrayList<>();
+    private List<Card> verdeeld = new ArrayList<>();
+    private CardPNG images;
+    private int card;
+
     public Deck() {
         this.generateCards();
     }
@@ -16,11 +20,24 @@ public class Deck {
                 cards.add(new Card(suit,rank));
             }
         }
-        CardPNG images = new CardPNG(cards);
+        this.shuffle();
+        images = new CardPNG(cards);
+        card=0;
     }
 
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public Card getNext() {
+        Card c = cards.get(card++);
+        cards.remove(c);
+        verdeeld.add(c);
+        return c;
+    }
+
+    public CardPNG getImages() {
+        return images;
     }
 
     public List<Card> getCards() {

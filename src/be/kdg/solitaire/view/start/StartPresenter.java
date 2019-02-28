@@ -28,7 +28,7 @@ public class StartPresenter {
         view.getBtnNewGame().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SolitaireView solitaireView = new SolitaireView();
+                SolitaireView solitaireView = new SolitaireView(model);
                 new SolitairePresenter(solitaireView,model);
                 view.getScene().setRoot(solitaireView);
             }

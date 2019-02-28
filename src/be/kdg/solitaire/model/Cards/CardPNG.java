@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CardPNG {
-    private HashMap<Card, Image> imageMap = new HashMap<Card,Image>();
+    private HashMap<Card, Image> imageMap = new HashMap<>();
 
     CardPNG(List<Card> cards) {
         char[] RANKS = {'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'};
         char[] SUITS = {'S','H','C','D'};
-        HashMap<Suits,Character> suitsHashMap = new HashMap<Suits, Character>();
-        HashMap<Ranks,Character> ranksCharacterHashMap = new HashMap<Ranks,Character>();
+        HashMap<Suits,Character> suitsHashMap = new HashMap<>();
+        HashMap<Ranks,Character> ranksCharacterHashMap = new HashMap<>();
         int i = 0;
         for (Suits suit: Suits.values()) {
             suitsHashMap.put(suit,SUITS[i++]);
@@ -28,7 +28,11 @@ public class CardPNG {
         }
     }
     public Image getimage(Card card) {
+
         return imageMap.getOrDefault(card, null);
     }
 
+    public Image getBack() {
+        return new Image ("/images/red_back.png");
+    }
 }
