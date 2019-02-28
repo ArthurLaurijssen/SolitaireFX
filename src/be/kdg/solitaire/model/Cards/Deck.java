@@ -31,9 +31,7 @@ public class Deck {
     public Card getNext() {
         Card c = cards.get(0);
         cards.remove(c);
-        System.out.println("Remaining cards:" + cards.size());
         verdeeld.add(c);
-        System.out.println("Verdeelde cards:" + verdeeld.size());
         return c;
     }
 
