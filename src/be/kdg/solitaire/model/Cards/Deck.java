@@ -21,7 +21,6 @@ public class Deck {
         }
         this.shuffle();
         images = new CardPNG(cards);
-        System.out.println(cards.size());
     }
 
     public void shuffle() {
@@ -41,5 +40,18 @@ public class Deck {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public Card idToCard(String id) {
+        String[] parts = id.split(":");
+        Suits suit =   Suits.values()[Integer.parseInt(parts[0])];
+        Ranks rank = Ranks.values()[Integer.parseInt(parts[1])];
+        System.out.println(cards.size());
+        for (Card card : this.verdeeld) {
+            if(card.getSuit().equals(suit) && card.getRank().equals(rank)) {
+                return card;
+            }
+        }
+        return null;
     }
 }

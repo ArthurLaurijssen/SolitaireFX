@@ -11,21 +11,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 class StapelPane extends StackPane {
-    private final double offset = 20.0;
+    private final double offsetOriginal = 25;
+    private double offset = 0;
     private List<Card> cardsOnStapel = new ArrayList<>();
+    private ImageView imgTop;
+    private Card cardOnTop;
+    private Deck deck;
+    private Stapels stapel;
+
     StapelPane(Stapels stapel,Deck deck) {
+        this.deck = deck;
+        this.stapel = stapel;
         for (int i = 0; i<=stapel.ordinal();i++) {
             Card c = deck.getNext();
            cardsOnStapel.add(c);
            if (i == stapel.ordinal()) {
-               getChildren().add(makeImageview(deck.getImages().getimage(c),offset*i));
+               imgTop = makeImageview(deck.getImages().getimage(c),offset);
+               offset = offset+ offsetOriginal;
+               getChildren().add(imgTop);
+               cardOnTop = c;
            }
            else {
-               getChildren().add(makeImageview(deck.getImages().getBack(),offset*i));
+               getChildren().add(makeImageview(deck.getImages().getBack(),offset));
+               offset = offset+ offsetOriginal;
            }
         }
+
     }
-    private ImageView makeImageview(Image img,double offset) {
+
+    Stapels getStapel() {
+        return stapel;
+    }
+
+    ImageView getImgTop() {
+        return imgTop;
+    }
+
+    Card getCardOnTop() {
+        return cardOnTop;
+    }
+    void addCard(String id) {
+        Card c = deck.idToCard(id);
+        cardsOnStapel.add(c);
+        ImageView imgV = makeImageview(deck.getImages().getimage(c),offset);
+        offset = offset+ offsetOriginal;
+        getChildren().add(imgV);
+    }
+
+    private ImageView makeImageview(Image img, double offset) {
         ImageView imageView = new ImageView(img);
         imageView.setFitHeight(150);
         imageView.setFitWidth(100);

@@ -1,7 +1,6 @@
 package be.kdg.solitaire.model.Cards;
 
 import javafx.scene.image.Image;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,11 +27,11 @@ public class CardPNG {
         }
     }
     public Image getimage(Card card) {
-
-        return imageMap.getOrDefault(card, null);
+        System.out.println(imageMap.size());
+        return imageMap.get(card);
     }
-
     public Image getBack() {
+
         return new Image ("/images/red_back.png");
     }
 }

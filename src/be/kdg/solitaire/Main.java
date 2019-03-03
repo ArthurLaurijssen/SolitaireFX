@@ -1,8 +1,6 @@
 package be.kdg.solitaire;
 
-import be.kdg.solitaire.model.Cards.Deck;
 import be.kdg.solitaire.model.SolitaireModel;
-import be.kdg.solitaire.view.solitaire.SolitairePresenter;
 import be.kdg.solitaire.view.start.StartPresenter;
 import be.kdg.solitaire.view.start.StartView;
 import javafx.application.Application;
@@ -41,8 +39,8 @@ public class Main extends Application {
                 }
             }
         });
-        primaryStage.setWidth(800);
-        primaryStage.setHeight(500);
+        primaryStage.setWidth(1300);
+        primaryStage.setHeight(800);
         primaryStage.setScene(scene);
         primaryStage.setTitle(title);
         primaryStage.show();
