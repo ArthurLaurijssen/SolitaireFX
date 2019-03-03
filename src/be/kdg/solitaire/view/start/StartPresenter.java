@@ -29,7 +29,6 @@ public class StartPresenter {
             @Override
             public void handle(ActionEvent event) {
                 SolitaireView solitaireView = new SolitaireView(model);
-                new SolitairePresenter(solitaireView,model);
                 view.getScene().setRoot(solitaireView);
             }
         });

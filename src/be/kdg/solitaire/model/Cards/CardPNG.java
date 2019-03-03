@@ -27,11 +27,9 @@ public class CardPNG {
         }
     }
     public Image getimage(Card card) {
-        System.out.println(imageMap.size());
         return imageMap.get(card);
     }
     public Image getBack() {
-
         return new Image ("/images/red_back.png");
     }
 }

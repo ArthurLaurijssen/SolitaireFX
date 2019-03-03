@@ -4,24 +4,29 @@ import be.kdg.solitaire.model.Cards.Stapels;
 import be.kdg.solitaire.model.Cards.Suits;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SolitaireView extends GridPane {
     private SolitaireModel model;
     private HBox hboxStapels;
     private HBox hBoxFoundations;
     private HBox hboxPot;
-
+    private Map<Card,ImageView> imageViewCardMap;
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
+    private SolitairePresenter presenter;
+
     public SolitaireView(SolitaireModel model) {
         this.model = model;
+        this.presenter= new SolitairePresenter(this,model);
+        this.imageViewCardMap = new HashMap<>();
         this.initialiseNodes();
         this.layoutNodes();
     }
@@ -75,7 +80,7 @@ public class SolitaireView extends GridPane {
     private void fillStapelPanes() {
         stapelPanes = new ArrayList<>();
         for (Stapels stapel: Stapels.values()) {
-            stapelPanes.add(new StapelPane(stapel,model.getDeck()));
+            stapelPanes.add(new StapelPane(stapel,model.getDeck(),this));
         }
     }
 
@@ -87,16 +92,17 @@ public class SolitaireView extends GridPane {
         return foundationPanes;
     }
 
-    void updateStapels(int target,int source,String id) {
-        int index =0;
-        for (Node child : this.hboxStapels.getChildren()) {
-            if (index == target) {
-                StapelPane stapelPane = (StapelPane) child;
-                stapelPane.addCard(id);
-                this.hboxStapels.getChildren().set(target,stapelPane);
-            }
-            index++;
-        }
+    public SolitairePresenter getPresenter() {
+        return presenter;
+    }
+
+    public Map<Card, ImageView> getImageViewCardMap() {
+        return imageViewCardMap;
+    }
+
+    void updateStapels(int target, int source, String id) {
+        stapelPanes.get(target).addCard(id);
+        stapelPanes.get(source).removeCard();
     }
 
 

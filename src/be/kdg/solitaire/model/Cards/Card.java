@@ -14,11 +14,11 @@ public class Card {
     }
 
 
-    Suits getSuit() {
+    public Suits getSuit() {
         return suit;
     }
 
-    Ranks getRank() {
+    public Ranks getRank() {
         return rank;
     }
 

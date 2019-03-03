@@ -46,7 +46,6 @@ public class Deck {
         String[] parts = id.split(":");
         Suits suit =   Suits.values()[Integer.parseInt(parts[0])];
         Ranks rank = Ranks.values()[Integer.parseInt(parts[1])];
-        System.out.println(cards.size());
         for (Card card : this.verdeeld) {
             if(card.getSuit().equals(suit) && card.getRank().equals(rank)) {
                 return card;
