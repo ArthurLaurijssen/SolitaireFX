@@ -1,8 +1,6 @@
 package be.kdg.solitaire.view.solitaire;
 
 import be.kdg.solitaire.model.Cards.*;
-import javafx.event.Event;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 

@@ -8,9 +8,11 @@ public class Deck {
     private List<Card> cards = new ArrayList<>(52);
     private List<Card> verdeeld = new ArrayList<>();
     private CardPNG images;
+    private int indexPot;
 
     public Deck() {
         this.generateCards();
+        this.indexPot =0;
     }
 
     private void generateCards() {
@@ -33,7 +35,17 @@ public class Deck {
         verdeeld.add(c);
         return c;
     }
+    public Card getNextPot() {
+        if (cards.size() !=indexPot) {
+            Card c = cards.get(indexPot++);
+            return c;
+        }
+        else {
+            indexPot =0;
+            return  getNextPot();
+        }
 
+    }
     public CardPNG getImages() {
         return images;
     }

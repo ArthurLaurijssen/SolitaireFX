@@ -4,6 +4,7 @@ import be.kdg.solitaire.model.Cards.Stapels;
 import be.kdg.solitaire.model.Cards.Suits;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,12 +23,13 @@ public class SolitaireView extends GridPane {
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
     private SolitairePresenter presenter;
+    private ImageView pot,potCardShown;
 
     public SolitaireView(SolitaireModel model) {
         this.model = model;
-        this.presenter= new SolitairePresenter(this,model);
         this.imageViewCardMap = new HashMap<>();
         this.initialiseNodes();
+        this.presenter= new SolitairePresenter(this,model);
         this.layoutNodes();
     }
     private void initialiseNodes() {
@@ -39,6 +41,8 @@ public class SolitaireView extends GridPane {
 
         //pot
         this.hboxPot = new HBox();
+        this.pot = new ImageView(model.getDeck().getImages().getBack());
+        this.potCardShown = new ImageView(new Image("/images/square.png"));
     }
 
     private void layoutNodes() {
@@ -59,14 +63,19 @@ public class SolitaireView extends GridPane {
         this.add(this.hBoxFoundations,1,0);
 
         //pot
-        ImageView img = new ImageView(model.getDeck().getImages().getBack());
-        img.setFitHeight(150);
-        img.setFitWidth(100);
-        this.hboxPot.getChildren().add(img);
+
+        this.hboxPot.setSpacing(40);
+        this.pot.setFitHeight(150);
+        this.pot.setFitWidth(100);
+        this.potCardShown.setFitWidth(100);
+        this.potCardShown.setFitHeight(150);
+        this.hboxPot.getChildren().add(this.pot);
+        this.hboxPot.getChildren().add(this.potCardShown);
         this.add(this.hboxPot,0,0);
 
+
         //gridpane
-        this.setHgap(300);
+        this.setHgap(200);
         this.setVgap(130);
         this.setPadding(new Insets(50));
 
@@ -74,7 +83,7 @@ public class SolitaireView extends GridPane {
     private void fillFoundationPanes() {
         foundationPanes = new ArrayList<>();
         for (Suits suit :  Suits.values()){
-            foundationPanes.add(new FoundationPane(model.getDeck(),suit));
+            foundationPanes.add(new FoundationPane(model.getDeck(),this,suit));
         }
     }
     private void fillStapelPanes() {
@@ -92,14 +101,41 @@ public class SolitaireView extends GridPane {
         return foundationPanes;
     }
 
-    public SolitairePresenter getPresenter() {
+    SolitairePresenter getPresenter() {
         return presenter;
     }
 
-    public Map<Card, ImageView> getImageViewCardMap() {
-        return imageViewCardMap;
+    ImageView getPot() {
+        return pot;
+    }
+    void switchPot(Image img) {
+        if (this.hboxPot.getChildren().size() >= 2) {
+            this.hboxPot.getChildren().remove(1);
+        }
+        this.potCardShown = new ImageView(img);
+        this.potCardShown.setFitHeight(150);
+        this.potCardShown.setFitWidth(100);
+        this.hboxPot.getChildren().add(1,this.potCardShown);
     }
 
+
+    public ImageView getPotCardShown() {
+        return potCardShown;
+    }
+
+    Map<Card, ImageView> getImageViewCardMap() {
+        return imageViewCardMap;
+    }
+    void updateFoundations(String id,int source) {
+        Card c = model.getDeck().idToCard(id);
+        for (FoundationPane pane : foundationPanes) {
+            if (pane.getSuit().equals(c.getSuit())) {
+                pane.addCard(c);
+                stapelPanes.get(source).removeCard();
+            }
+        }
+
+    }
     void updateStapels(int target, int source, String id) {
         stapelPanes.get(target).addCard(id);
         stapelPanes.get(source).removeCard();

@@ -2,7 +2,6 @@ package be.kdg.solitaire.view.solitaire;
 
 import be.kdg.solitaire.model.Cards.Card;
 import be.kdg.solitaire.model.Cards.Ranks;
-import be.kdg.solitaire.model.Cards.Stapels;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -25,7 +24,13 @@ public class SolitairePresenter {
         emptyPanes = new HashMap<>();
     }
     private void addEventHandlers() {
-        
+        view.getPot().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Card c = model.getDeck().getNextPot();
+                view.switchPot(model.getDeck().getImages().getimage(c));
+            }
+        });
     }
     private void updateView() {
 
@@ -41,7 +46,10 @@ public class SolitairePresenter {
         imgv.setOnDragOver(dragOver(imgv));
         imgv.setOnDragDropped(dragDroppedEmpty(imgv));
     }
-
+    void foundationsAddEventhandlers(ImageView imgv,FoundationPane foundationPane) {
+        imgv.setOnDragDropped(dragDroppedFoundation(imgv,foundationPane));
+        imgv.setOnDragOver(dragOver(imgv));
+    }
     private EventHandler<MouseEvent> dragDetected(ImageView img,Card card) {
         return new EventHandler<MouseEvent>() {
             @Override
@@ -93,7 +101,6 @@ public class SolitairePresenter {
         return new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
-                System.out.println(true);
                 if (db.hasString()) {
                     if (cardBeingDragged.getRank().equals(Ranks.KONING)) {
                         view.updateStapels(emptyPanes.get(imageView).getStapel().ordinal(),source,db.getString());
@@ -101,6 +108,26 @@ public class SolitairePresenter {
                     }
                     else  {
                         event.consume();
+                    }
+                }
+                event.consume();
+            }
+        };
+    }
+    private EventHandler<DragEvent> dragDroppedFoundation(ImageView imageView,FoundationPane pane) {
+        return new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                if (db.hasString()) {
+                        if (cardBeingDragged.getRank().equals(Ranks.AAS)) {
+                            view.updateFoundations(db.getString(),source);
+                        }
+                        else {
+                               if (pane.getHighestRank()!=null) {
+                                   if (pane.getHighestRank().hasNext() && pane.getHighestRank().getNext().equals(cardBeingDragged.getRank())) {
+                                       view.updateFoundations(db.getString(),source);
+                            }
+                        }
                     }
                 }
                 event.consume();
