@@ -35,14 +35,33 @@ public class Deck {
         verdeeld.add(c);
         return c;
     }
+    public Card getPreviousPot() {
+            indexPot=indexPot-2;
+            if (indexPot>=0) {
+                return cards.get(indexPot++);
+            }
+            else  {
+                indexPot=0;
+                if (cards.isEmpty()) {
+                    return null;
+                }
+                return cards.get(indexPot++);
+            }
+    }
     public Card getNextPot() {
         if (cards.size() !=indexPot) {
-            Card c = cards.get(indexPot++);
-            return c;
+            if (cards.isEmpty()) {
+                return null;
+            }
+
+            return cards.get(indexPot++);
         }
         else {
             indexPot =0;
-            return  getNextPot();
+            if (getNextPot()!=null) {
+                return  getNextPot();
+            }
+            return null;
         }
 
     }
@@ -54,12 +73,23 @@ public class Deck {
         return cards;
     }
 
+    public List<Card> getVerdeeld() {
+        return verdeeld;
+    }
+
     public Card idToCard(String id) {
         String[] parts = id.split(":");
         Suits suit =   Suits.values()[Integer.parseInt(parts[0])];
         Ranks rank = Ranks.values()[Integer.parseInt(parts[1])];
         for (Card card : this.verdeeld) {
             if(card.getSuit().equals(suit) && card.getRank().equals(rank)) {
+                return card;
+            }
+        }
+        for (Card card : this.cards) {
+            if(card.getSuit().equals(suit) && card.getRank().equals(rank)) {
+                this.verdeeld.add(card);
+                this.cards.remove(card);
                 return card;
             }
         }

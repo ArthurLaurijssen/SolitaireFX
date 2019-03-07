@@ -16,7 +16,9 @@ public class SolitairePresenter {
     private int source;
     private Card cardBeingDragged;
     private HashMap<ImageView,StapelPane> emptyPanes;
-    public SolitairePresenter(SolitaireView view, SolitaireModel model) {
+    private boolean multipleCards;
+
+    SolitairePresenter(SolitaireView view, SolitaireModel model) {
         this.view = view;
         this.model = model;
         this.addEventHandlers();
@@ -28,7 +30,7 @@ public class SolitairePresenter {
             @Override
             public void handle(MouseEvent event) {
                 Card c = model.getDeck().getNextPot();
-                view.switchPot(model.getDeck().getImages().getimage(c));
+                view.switchPot(c);
             }
         });
     }
@@ -38,7 +40,7 @@ public class SolitairePresenter {
     void addEventhandlers(ImageView imgv,Card card) {
         imgv.setOnDragDetected(dragDetected(imgv,card));
         imgv.setOnDragOver(dragOver(imgv));
-        imgv.setOnDragDropped(dragDropped(imgv,card));
+        imgv.setOnDragDropped(dragDropped(card));
         imgv.setOnDragExited(Event::consume);
     }
     void emptyStapelEventHandlers(ImageView imgv, StapelPane stapelPane) {
@@ -49,6 +51,9 @@ public class SolitairePresenter {
     void foundationsAddEventhandlers(ImageView imgv,FoundationPane foundationPane) {
         imgv.setOnDragDropped(dragDroppedFoundation(imgv,foundationPane));
         imgv.setOnDragOver(dragOver(imgv));
+    }
+    void potAddEventHandlers(ImageView imgv,Card c) {
+        imgv.setOnDragDetected(dragDetected(imgv,c));
     }
     private EventHandler<MouseEvent> dragDetected(ImageView img,Card card) {
         return new EventHandler<MouseEvent>() {
@@ -61,10 +66,17 @@ public class SolitairePresenter {
                 dragboard.setContent(content);
                 for (StapelPane st:view.getStapelPanes()) {
                     if (st.getCardsOnStapel().contains(card)) {
+                        multipleCards= !st.getCardOnTop().equals(card);
                         source = st.getStapel().ordinal();
+                        break;
                     }
                 }
+                if (model.getDeck().getCards().contains(card)) {
+                    multipleCards= false;
+                    source = -1;
+                }
                 event.consume();
+
             }
         };
     }
@@ -79,16 +91,29 @@ public class SolitairePresenter {
             }
         };
     }
-    private EventHandler<DragEvent> dragDropped(ImageView imageView,Card card) {
+    private EventHandler<DragEvent> dragDropped(Card cardTarget) {
        return new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
-                if (db.hasString()) {
-                    for (StapelPane st:view.getStapelPanes()) {
-                       if (st.getCardsOnStapel().contains(card)) {
-                               view.updateStapels(st.getStapel().ordinal(),source,db.getString());
-                       }
+                    if (db.hasString()) {
+                       Card c = model.getDeck().idToCard(db.getString());
+                    if (cardTarget.kanErop(c)) {
+                        if (multipleCards) {
+                            for (StapelPane st:view.getStapelPanes()) {
+                                if (st.getCardsOnStapel().contains(cardTarget)) {
+                                    view.updateMultipleCards(st.getStapel().ordinal(),source,db.getString());
+                                }
+                            }
+                        }
+                        else {
+                            for (StapelPane st:view.getStapelPanes()) {
+                                if (st.getCardsOnStapel().contains(cardTarget)) {
+                                    view.updateStapels(st.getStapel().ordinal(),source,db.getString());
+                                }
+                            }
+                        }
+
                     }
                     success = true;
                 }
@@ -103,8 +128,14 @@ public class SolitairePresenter {
                 Dragboard db = event.getDragboard();
                 if (db.hasString()) {
                     if (cardBeingDragged.getRank().equals(Ranks.KONING)) {
-                        view.updateStapels(emptyPanes.get(imageView).getStapel().ordinal(),source,db.getString());
-                        emptyPanes.remove(imageView);
+                        if (multipleCards) {
+                            view.updateMultipleCards(emptyPanes.get(imageView).getStapel().ordinal(),source,db.getString());
+                            emptyPanes.remove(imageView);
+                        }
+                        else {
+                            view.updateStapels(emptyPanes.get(imageView).getStapel().ordinal(),source,db.getString());
+                            emptyPanes.remove(imageView);
+                        }
                     }
                     else  {
                         event.consume();
@@ -128,7 +159,19 @@ public class SolitairePresenter {
                                        view.updateFoundations(db.getString(),source);
                             }
                         }
+                        boolean gewonnen =false;
+                        for (FoundationPane pane:view.getFoundationPanes()) {
+                            if (pane.getHighestRank()==null || !pane.getHighestRank().equals(Ranks.KONING)) {
+                                break;
+                            }
+                            gewonnen = true;
+                        }
+                        if (gewonnen) {
+                            //Code als je gewonnen bent
+                            System.out.println("Gewonnen");
+                        }
                     }
+
                 }
                 event.consume();
             }

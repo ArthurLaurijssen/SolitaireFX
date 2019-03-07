@@ -4,6 +4,7 @@ import be.kdg.solitaire.model.Cards.Stapels;
 import be.kdg.solitaire.model.Cards.Suits;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -43,6 +44,7 @@ public class SolitaireView extends GridPane {
         this.hboxPot = new HBox();
         this.pot = new ImageView(model.getDeck().getImages().getBack());
         this.potCardShown = new ImageView(new Image("/images/square.png"));
+
     }
 
     private void layoutNodes() {
@@ -79,6 +81,7 @@ public class SolitaireView extends GridPane {
         this.setVgap(130);
         this.setPadding(new Insets(50));
 
+
     }
     private void fillFoundationPanes() {
         foundationPanes = new ArrayList<>();
@@ -105,16 +108,19 @@ public class SolitaireView extends GridPane {
         return presenter;
     }
 
+
     ImageView getPot() {
         return pot;
     }
-    void switchPot(Image img) {
+
+    void switchPot(Card c) {
         if (this.hboxPot.getChildren().size() >= 2) {
             this.hboxPot.getChildren().remove(1);
         }
-        this.potCardShown = new ImageView(img);
+        this.potCardShown = new ImageView(model.getDeck().getImages().getimage(c));
         this.potCardShown.setFitHeight(150);
         this.potCardShown.setFitWidth(100);
+        this.presenter.potAddEventHandlers(this.potCardShown,c);
         this.hboxPot.getChildren().add(1,this.potCardShown);
     }
 
@@ -127,18 +133,67 @@ public class SolitaireView extends GridPane {
         return imageViewCardMap;
     }
     void updateFoundations(String id,int source) {
+
         Card c = model.getDeck().idToCard(id);
-        for (FoundationPane pane : foundationPanes) {
-            if (pane.getSuit().equals(c.getSuit())) {
-                pane.addCard(c);
-                stapelPanes.get(source).removeCard();
+        if (source ==-1) {
+            model.getDeck().getCards().remove(c);
+            model.getDeck().getVerdeeld().add(c);
+            Card c1 = model.getDeck().getPreviousPot();
+            this.switchPot(c1);
+            for (FoundationPane pane : foundationPanes) {
+                if (pane.getSuit().equals(c.getSuit())) {
+                    pane.addCard(c);
+                    break;
+                }
             }
+        }
+        else {
+            for (FoundationPane pane : foundationPanes) {
+                if (pane.getSuit().equals(c.getSuit())) {
+                    pane.addCard(c);
+                    stapelPanes.get(source).removeCard();
+                    break;
+                }
+            }
+        }
+
+    }
+    void updateMultipleCards(int target,int source,String id) {
+        Card c = model.getDeck().idToCard(id);
+        int d=0;
+        for (Card card:stapelPanes.get(source).getCardsOnStapel()) {
+            if (card.equals(c)) {
+                 d = stapelPanes.get(source).getCardsOnStapel().indexOf(card);
+                break;
+            }
+        }
+        ArrayList<Card> cardsToMove = new ArrayList<>();
+        for (int i = d; i < stapelPanes.get(source).getCardsOnStapel().size(); i++) {
+            cardsToMove.add(stapelPanes.get(source).getCardsOnStapel().get(i));
+        }
+        for (Card card: cardsToMove) {
+            stapelPanes.get(target).addCard(card);
+            stapelPanes.get(source).removeCard(card);
         }
 
     }
     void updateStapels(int target, int source, String id) {
         stapelPanes.get(target).addCard(id);
-        stapelPanes.get(source).removeCard();
+        if (source==-1) {
+            Card c = model.getDeck().idToCard(id);
+            model.getDeck().getCards().remove(c);
+            model.getDeck().getVerdeeld().add(c);
+            if (model.getDeck().getPreviousPot()!=null) {
+                c = model.getDeck().getPreviousPot();
+                this.switchPot(c);
+            }
+            else {
+                this.hboxPot.getChildren().remove(1);
+            }
+        }
+        else if (stapelPanes.get(source).getCardsOnStapel().contains(model.getDeck().idToCard(id))) {
+            stapelPanes.get(source).removeCard();
+        }
     }
 
 

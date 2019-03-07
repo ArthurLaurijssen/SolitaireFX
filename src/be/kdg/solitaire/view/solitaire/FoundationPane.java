@@ -8,10 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-import java.util.List;
 
-public class FoundationPane extends StackPane {
-    private List<Card> cards;
+class FoundationPane extends StackPane {
     private Suits suit;
     private Ranks highestRank;
     private SolitaireView view;
@@ -24,9 +22,7 @@ public class FoundationPane extends StackPane {
         this.getChildren().add(makeImageviewBack(deck.getImages().getBack()));
     }
 
-    List<Card> getCards() {
-        return cards;
-    }
+
     void addCard(Card card) {
         this.getChildren().add(makeImageView(card));
         this.highestRank = card.getRank();

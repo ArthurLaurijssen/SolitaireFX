@@ -42,6 +42,10 @@ class StapelPane extends StackPane {
         return stapel;
     }
 
+    Card getCardOnTop() {
+        return cardOnTop;
+    }
+
     void addCard(String id) {
         Card c = deck.idToCard(id);
         cardsOnStapel.add(c);
@@ -49,10 +53,26 @@ class StapelPane extends StackPane {
         getChildren().add(imgV);
         cardOnTop = c;
     }
+    void addCard(Card c) {
+        cardsOnStapel.add(c);
+        ImageView imgV = this.makeImageView(c);
+        getChildren().add(imgV);
+        cardOnTop = c;
+    }
+    void removeCard(Card c) {
+        getChildren().remove(cardsOnStapel.indexOf(c));
+        cardsOnStapel.remove(c);
+        offset = offset-offsetOriginal;
+        this.turnNextCard();
+
+    }
     void removeCard() {
         cardsOnStapel.remove(cardOnTop);
         getChildren().remove(getChildren().size()-1);
         offset = offset-offsetOriginal;
+        this.turnNextCard();
+    }
+    private void turnNextCard() {
         if (!cardsOnStapel.isEmpty()) {
             getChildren().remove(getChildren().size()-1);
             offset = offset-offsetOriginal;
@@ -64,7 +84,6 @@ class StapelPane extends StackPane {
             getChildren().add(makeEmptyPane());
         }
     }
-
     private ImageView makeImageViewBack() {
         ImageView imageView = new ImageView(this.deck.getImages().getBack());
         imageView.setFitHeight(150);
