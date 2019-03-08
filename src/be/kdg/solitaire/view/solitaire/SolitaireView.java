@@ -4,11 +4,14 @@ import be.kdg.solitaire.model.Cards.Stapels;
 import be.kdg.solitaire.model.Cards.Suits;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.geometry.Insets;
-import javafx.scene.image.Image;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +25,7 @@ public class SolitaireView extends GridPane {
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
     private final SolitairePresenter presenter;
+    private MenuBar menuBar;
 
     public SolitaireView(SolitaireModel model) {
         this.model = model;
@@ -40,6 +44,16 @@ public class SolitaireView extends GridPane {
         //pot
         this.hboxPot = new Pot(model,this);
 
+        //MenuBar
+        final MenuItem newGame = new MenuItem("New Game");
+        final MenuItem highScore = new MenuItem("HighScores");
+        final MenuItem exit = new MenuItem("Exit");
+        final Menu game = new Menu("Game",null,newGame,highScore,exit);
+
+        final MenuItem gameRules = new MenuItem("Game rules");
+        final MenuItem about = new MenuItem("About");
+        final Menu help = new Menu("Help",null,gameRules,about);
+        this.menuBar = new MenuBar(game,help);
 
     }
 
@@ -50,7 +64,7 @@ public class SolitaireView extends GridPane {
             this.hboxStapels.getChildren().add(stapelPane);
         }
         this.hboxStapels.setSpacing(40);
-        this.add(this.hboxStapels,0,1,2,1);
+        this.add(this.hboxStapels,0,2,2,1);
 
         //4 foundation stappels
         this.fillFoundationPanes();
@@ -58,11 +72,13 @@ public class SolitaireView extends GridPane {
             this.hBoxFoundations.getChildren().add(foundationPane);
         }
         this.hBoxFoundations.setSpacing(40);
-        this.add(this.hBoxFoundations,1,0);
+        this.add(this.hBoxFoundations,1,1);
 
         //pot
-        this.add(this.hboxPot,0,0);
+        this.add(this.hboxPot,0,1);
 
+        //MenuBar
+        this.add(this.menuBar,0,0);
         //gridpane
         this.setHgap(200);
         this.setVgap(130);
