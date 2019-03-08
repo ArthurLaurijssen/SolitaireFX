@@ -3,7 +3,7 @@ package be.kdg.solitaire.model;
 import be.kdg.solitaire.model.Cards.Deck;
 
 public class SolitaireModel {
-    private Deck deck;
+    private final Deck deck;
     public SolitaireModel() {
         deck = new Deck();
         deck.shuffle();

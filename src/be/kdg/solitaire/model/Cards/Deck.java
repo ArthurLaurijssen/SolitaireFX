@@ -22,7 +22,7 @@ public class Deck {
             }
         }
         this.shuffle();
-        images = new CardPNG(cards);
+        this.images = new CardPNG(cards);
     }
 
     public void shuffle() {
@@ -35,7 +35,6 @@ public class Deck {
         verdeeld.add(c);
         return c;
     }
-    private int d = 1;
     public Card getPreviousPot() {
             indexPot = indexPot-2;
             if (indexPot>=0) {

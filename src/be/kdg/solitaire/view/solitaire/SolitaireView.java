@@ -4,7 +4,6 @@ import be.kdg.solitaire.model.Cards.Stapels;
 import be.kdg.solitaire.model.Cards.Suits;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -16,14 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 public class SolitaireView extends GridPane {
-    private SolitaireModel model;
+    private final SolitaireModel model;
     private HBox hboxStapels;
     private HBox hBoxFoundations;
     private HBox hboxPot;
     private Map<Card,ImageView> imageViewCardMap;
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
-    private SolitairePresenter presenter;
+    private final SolitairePresenter presenter;
     private ImageView pot,potCardShown;
 
     public SolitaireView(SolitaireModel model) {
@@ -65,7 +64,7 @@ public class SolitaireView extends GridPane {
         this.add(this.hBoxFoundations,1,0);
 
         //pot
-
+        this.hboxPot = new Pot();
         this.hboxPot.setSpacing(40);
         this.pot.setFitHeight(150);
         this.pot.setFitWidth(100);
@@ -125,15 +124,10 @@ public class SolitaireView extends GridPane {
     }
 
 
-    public ImageView getPotCardShown() {
-        return potCardShown;
-    }
-
     Map<Card, ImageView> getImageViewCardMap() {
         return imageViewCardMap;
     }
     void updateFoundations(String id,int source) {
-
         Card c = model.getDeck().idToCard(id);
         if (source ==-1) {
             model.getDeck().getCards().remove(c);
