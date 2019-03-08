@@ -1,15 +1,16 @@
 package be.kdg.solitaire.view.solitaire;
 import be.kdg.solitaire.model.SolitaireModel;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 
-public class SolitaireView extends VBox {
+public class SolitaireView extends BorderPane {
     private final SolitaireModel model;
     private MenuBar menuBar;
+    private ToolBar toolBar;
     private GameView gameView;
+    private Label score,tijd;
 
     public SolitaireView(SolitaireModel model) {
         this.model = model;
@@ -30,12 +31,18 @@ public class SolitaireView extends VBox {
         final Menu help = new Menu("Help",null,gameRules,about);
         this.menuBar = new MenuBar(game,help);
 
+        //ToolBar
+        this.score = new Label("Score:      ");
+        this.tijd = new Label("Time:         ");
+        this.toolBar = new ToolBar(score,tijd);
+
+
     }
 
     private void layoutNodes() {
-        this.setSpacing(0);
-        this.getChildren().add(this.menuBar);
-        this.getChildren().add(this.gameView);
+        this.setTop(this.menuBar);
+        this.setCenter(this.gameView);
+        this.setBottom(this.toolBar);
     }
 
 }

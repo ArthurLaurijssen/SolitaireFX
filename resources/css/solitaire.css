@@ -1,3 +1,6 @@
 Button{
     -fx-font-size: 16px;
 }
+.tool-bar {
+    -fx-spacing: 80px;
+}
