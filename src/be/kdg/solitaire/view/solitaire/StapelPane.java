@@ -12,10 +12,11 @@ class StapelPane extends StackPane {
     private double offset = 0;
     private List<Card> cardsOnStapel;
     private final Deck deck;
-    private final SolitaireView view;
+    private final GameView view;
     private Stapels stapel;
     private Card cardOnTop;
-    StapelPane(Stapels stapel,Deck deck,SolitaireView view) {
+
+    StapelPane(Stapels stapel,Deck deck,GameView view) {
         this.offsetOriginal = 25;
         this.cardsOnStapel = new ArrayList<>();
         this.view = view;

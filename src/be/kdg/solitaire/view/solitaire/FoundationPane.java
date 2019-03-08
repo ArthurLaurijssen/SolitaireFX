@@ -12,10 +12,10 @@ import javafx.scene.layout.StackPane;
 class FoundationPane extends StackPane {
     private final Suits suit;
     private Ranks highestRank;
-    private final SolitaireView view;
+    private final GameView view;
     private final Deck deck;
 
-    FoundationPane(Deck deck,SolitaireView view,Suits suit) {
+    FoundationPane(Deck deck,GameView view,Suits suit) {
         this.view = view;
         this.deck = deck;
         this.suit = suit;

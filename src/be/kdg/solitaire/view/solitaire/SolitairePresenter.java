@@ -11,14 +11,14 @@ import javafx.scene.input.*;
 import java.util.HashMap;
 
 public class SolitairePresenter {
-    private final SolitaireView view;
+    private final GameView view;
     private final SolitaireModel model;
     private int source;
     private Card cardBeingDragged;
     private HashMap<ImageView,StapelPane> emptyPanes;
     private boolean multipleCards;
 
-    SolitairePresenter(SolitaireView view, SolitaireModel model) {
+    SolitairePresenter(GameView view, SolitaireModel model) {
         this.view = view;
         this.model = model;
         this.addEventHandlers();

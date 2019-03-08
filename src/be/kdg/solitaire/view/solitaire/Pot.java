@@ -9,10 +9,10 @@ import javafx.scene.layout.HBox;
 class Pot extends HBox {
     private ImageView pot,potCardShown;
     private final SolitaireModel model;
-    private final SolitaireView view;
+    private final GameView view;
 
 
-    Pot(SolitaireModel model,SolitaireView view) {
+    Pot(SolitaireModel model,GameView view) {
         System.out.println(true);
         this.model = model;
         this.view = view;
