@@ -35,8 +35,9 @@ public class Deck {
         verdeeld.add(c);
         return c;
     }
+    private int d = 1;
     public Card getPreviousPot() {
-            indexPot=indexPot-2;
+            indexPot = indexPot-2;
             if (indexPot>=0) {
                 return cards.get(indexPot++);
             }
@@ -49,20 +50,19 @@ public class Deck {
             }
     }
     public Card getNextPot() {
-        if (cards.size() !=indexPot) {
+        if (cards.size() != indexPot) {
             if (cards.isEmpty()) {
                 return null;
             }
-
             return cards.get(indexPot++);
         }
         else {
             indexPot =0;
-            if (getNextPot()!=null) {
-                return  getNextPot();
+            if (!cards.isEmpty()) {
+                return  cards.get(indexPot++);
             }
-            return null;
         }
+        return null;
 
     }
     public CardPNG getImages() {

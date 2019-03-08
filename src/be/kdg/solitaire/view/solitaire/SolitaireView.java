@@ -183,8 +183,8 @@ public class SolitaireView extends GridPane {
             Card c = model.getDeck().idToCard(id);
             model.getDeck().getCards().remove(c);
             model.getDeck().getVerdeeld().add(c);
-            if (model.getDeck().getPreviousPot()!=null) {
-                c = model.getDeck().getPreviousPot();
+            c =model.getDeck().getPreviousPot();
+            if (c!=null) {
                 this.switchPot(c);
             }
             else {
