@@ -24,7 +24,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         StartView view = new StartView();
         SolitaireModel model = new SolitaireModel();
-        StartPresenter presenter = new StartPresenter(model,view);
+        new StartPresenter(model,view);
         Scene scene = new Scene(view);
         scene.getStylesheets().add("css/solitaire.css");
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

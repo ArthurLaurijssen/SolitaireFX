@@ -9,8 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class StartView extends BorderPane {
-    private Button btnNewGame;
-    private Button btnExit;
+    private Button btnNewGame,btnExit;
     private HBox hbox;
     private VBox vbox;
     private Label lblHighScores;

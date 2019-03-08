@@ -16,14 +16,12 @@ import java.util.Map;
 
 public class SolitaireView extends GridPane {
     private final SolitaireModel model;
-    private HBox hboxStapels;
-    private HBox hBoxFoundations;
-    private HBox hboxPot;
+    private HBox hboxStapels,hBoxFoundations;
+    private Pot hboxPot;
     private Map<Card,ImageView> imageViewCardMap;
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
     private final SolitairePresenter presenter;
-    private ImageView pot,potCardShown;
 
     public SolitaireView(SolitaireModel model) {
         this.model = model;
@@ -40,9 +38,8 @@ public class SolitaireView extends GridPane {
         this.hBoxFoundations = new HBox();
 
         //pot
-        this.hboxPot = new HBox();
-        this.pot = new ImageView(model.getDeck().getImages().getBack());
-        this.potCardShown = new ImageView(new Image("/images/square.png"));
+        this.hboxPot = new Pot(model,this);
+
 
     }
 
@@ -64,16 +61,7 @@ public class SolitaireView extends GridPane {
         this.add(this.hBoxFoundations,1,0);
 
         //pot
-        this.hboxPot = new Pot();
-        this.hboxPot.setSpacing(40);
-        this.pot.setFitHeight(150);
-        this.pot.setFitWidth(100);
-        this.potCardShown.setFitWidth(100);
-        this.potCardShown.setFitHeight(150);
-        this.hboxPot.getChildren().add(this.pot);
-        this.hboxPot.getChildren().add(this.potCardShown);
         this.add(this.hboxPot,0,0);
-
 
         //gridpane
         this.setHgap(200);
@@ -108,32 +96,22 @@ public class SolitaireView extends GridPane {
     }
 
 
-    ImageView getPot() {
-        return pot;
-    }
-
-    void switchPot(Card c) {
-        if (this.hboxPot.getChildren().size() >= 2) {
-            this.hboxPot.getChildren().remove(1);
-        }
-        this.potCardShown = new ImageView(model.getDeck().getImages().getimage(c));
-        this.potCardShown.setFitHeight(150);
-        this.potCardShown.setFitWidth(100);
-        this.presenter.potAddEventHandlers(this.potCardShown,c);
-        this.hboxPot.getChildren().add(1,this.potCardShown);
-    }
-
-
     Map<Card, ImageView> getImageViewCardMap() {
         return imageViewCardMap;
     }
+
+    Pot getPot() {
+        return this.hboxPot;
+    }
+
+
     void updateFoundations(String id,int source) {
         Card c = model.getDeck().idToCard(id);
         if (source ==-1) {
             model.getDeck().getCards().remove(c);
             model.getDeck().getVerdeeld().add(c);
             Card c1 = model.getDeck().getPreviousPot();
-            this.switchPot(c1);
+            this.hboxPot.switchPot(c1);
             for (FoundationPane pane : foundationPanes) {
                 if (pane.getSuit().equals(c.getSuit())) {
                     pane.addCard(c);
@@ -152,6 +130,7 @@ public class SolitaireView extends GridPane {
         }
 
     }
+
     void updateMultipleCards(int target,int source,String id) {
         Card c = model.getDeck().idToCard(id);
         int d=0;
@@ -179,7 +158,7 @@ public class SolitaireView extends GridPane {
             model.getDeck().getVerdeeld().add(c);
             c =model.getDeck().getPreviousPot();
             if (c!=null) {
-                this.switchPot(c);
+                this.hboxPot.switchPot(c);
             }
             else {
                 this.hboxPot.getChildren().remove(1);

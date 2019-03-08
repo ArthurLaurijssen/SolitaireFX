@@ -11,8 +11,8 @@ class StapelPane extends StackPane {
     private final double offsetOriginal;
     private double offset = 0;
     private List<Card> cardsOnStapel;
-    private Deck deck;
-    private SolitaireView view;
+    private final Deck deck;
+    private final SolitaireView view;
     private Stapels stapel;
     private Card cardOnTop;
     StapelPane(Stapels stapel,Deck deck,SolitaireView view) {

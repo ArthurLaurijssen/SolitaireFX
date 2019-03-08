@@ -11,8 +11,8 @@ import javafx.scene.input.*;
 import java.util.HashMap;
 
 public class SolitairePresenter {
-    private SolitaireView view;
-    private SolitaireModel model;
+    private final SolitaireView view;
+    private final SolitaireModel model;
     private int source;
     private Card cardBeingDragged;
     private HashMap<ImageView,StapelPane> emptyPanes;
@@ -26,11 +26,11 @@ public class SolitairePresenter {
         emptyPanes = new HashMap<>();
     }
     private void addEventHandlers() {
-        view.getPot().setOnMouseClicked(new EventHandler<MouseEvent>() {
+        view.getPot().getPotImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 Card c = model.getDeck().getNextPot();
-                view.switchPot(c);
+                view.getPot().switchPot(c);
             }
         });
     }

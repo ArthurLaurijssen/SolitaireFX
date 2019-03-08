@@ -9,8 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class StartPresenter {
-    private SolitaireModel model;
-    private StartView view;
+    private final SolitaireModel model;
+    private final StartView view;
 
     public StartPresenter(SolitaireModel model,StartView view) {
         this.view = view;
