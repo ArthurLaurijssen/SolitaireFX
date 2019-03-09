@@ -22,11 +22,9 @@ class GameView extends GridPane {
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
     private final SolitairePresenter presenter;
-    private SolitaireView view;
 
-    GameView(SolitaireModel model,SolitaireView view) {
+    GameView(SolitaireModel model) {
         this.model = model;
-        this.view = view;
         this.imageViewCardMap = new HashMap<>();
         this.initialiseNodes();
         this.presenter= new SolitairePresenter(this,model);

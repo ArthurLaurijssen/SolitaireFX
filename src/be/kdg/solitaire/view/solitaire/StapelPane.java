@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class StapelPane extends StackPane {
-    private final double offsetOriginal;
+    private final double OFFSET_ORIGINAL;
     private double offset = 0;
     private List<Card> cardsOnStapel;
     private final Deck deck;
@@ -17,7 +17,7 @@ class StapelPane extends StackPane {
     private Card cardOnTop;
 
     StapelPane(Stapels stapel,Deck deck,GameView view) {
-        this.offsetOriginal = 25;
+        this.OFFSET_ORIGINAL = 25;
         this.cardsOnStapel = new ArrayList<>();
         this.view = view;
         this.deck = deck;
@@ -63,20 +63,20 @@ class StapelPane extends StackPane {
     void removeCard(Card c) {
         getChildren().remove(cardsOnStapel.indexOf(c));
         cardsOnStapel.remove(c);
-        offset = offset-offsetOriginal;
+        offset = offset- OFFSET_ORIGINAL;
         this.turnNextCard();
 
     }
     void removeCard() {
         cardsOnStapel.remove(cardOnTop);
         getChildren().remove(getChildren().size()-1);
-        offset = offset-offsetOriginal;
+        offset = offset- OFFSET_ORIGINAL;
         this.turnNextCard();
     }
     private void turnNextCard() {
         if (!cardsOnStapel.isEmpty()) {
             getChildren().remove(getChildren().size()-1);
-            offset = offset-offsetOriginal;
+            offset = offset- OFFSET_ORIGINAL;
             cardOnTop = cardsOnStapel.get(cardsOnStapel.size()-1);
             getChildren().add(makeImageView(cardOnTop));
         }
@@ -90,7 +90,7 @@ class StapelPane extends StackPane {
         imageView.setFitHeight(150);
         imageView.setFitWidth(100);
         imageView.setTranslateY(offset);
-        this.offset = this.offset+ this.offsetOriginal;
+        this.offset = this.offset+ this.OFFSET_ORIGINAL;
         return  imageView;
     }
     private ImageView makeImageView(Card c) {
@@ -98,7 +98,7 @@ class StapelPane extends StackPane {
         imageView.setFitHeight(150);
         imageView.setFitWidth(100);
         imageView.setTranslateY(offset);
-        this.offset = this.offset+ this.offsetOriginal;
+        this.offset = this.offset+ this.OFFSET_ORIGINAL;
         this.view.getImageViewCardMap().put(c,imageView);
         view.getPresenter().addEventhandlers(imageView,c);
         return  imageView;

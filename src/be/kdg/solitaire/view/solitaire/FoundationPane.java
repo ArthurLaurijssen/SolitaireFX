@@ -19,7 +19,7 @@ class FoundationPane extends StackPane {
         this.view = view;
         this.deck = deck;
         this.suit = suit;
-        this.getChildren().add(makeImageviewBack(deck.getImages().getBack()));
+        this.getChildren().add(makeImageViewFoundations(suit));
     }
 
 
@@ -36,12 +36,14 @@ class FoundationPane extends StackPane {
         return highestRank;
     }
 
-    private ImageView makeImageviewBack(Image img) {
-        ImageView imageView = new ImageView(img);
+    private ImageView makeImageViewFoundations(Suits suit) {
+        char[] SUITS = {'S','H','C','D'};
+        String url = "/images/" + SUITS[suit.ordinal()] + ".png";
+        ImageView imageView = new ImageView(new Image(url));
         imageView.setFitHeight(150);
         imageView.setFitWidth(100);
         view.getPresenter().foundationsAddEventhandlers(imageView,this);
-        return  imageView;
+        return imageView;
     }
     private ImageView makeImageView(Card c) {
         ImageView imageView = new ImageView(this.deck.getImages().getimage(c));

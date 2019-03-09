@@ -3,4 +3,5 @@ Button{
 }
 .tool-bar {
     -fx-spacing: 80px;
+    -fx-font-size: 20px;
 }

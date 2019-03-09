@@ -2,8 +2,6 @@ package be.kdg.solitaire.view.solitaire;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-
 
 public class SolitaireView extends BorderPane {
     private final SolitaireModel model;
@@ -19,7 +17,7 @@ public class SolitaireView extends BorderPane {
     }
     private void initialiseNodes() {
         //GameView
-        gameView = new GameView(this.model,this);
+        gameView = new GameView(this.model);
         //MenuBar
         final MenuItem newGame = new MenuItem("New Game");
         final MenuItem highScore = new MenuItem("HighScores");
@@ -32,8 +30,8 @@ public class SolitaireView extends BorderPane {
         this.menuBar = new MenuBar(game,help);
 
         //ToolBar
-        this.score = new Label("Score:      ");
-        this.tijd = new Label("Time:         ");
+        this.score = new Label("Score:\t 50   ");
+        this.tijd = new Label("Time:\t0:31     ");
         this.toolBar = new ToolBar(score,tijd);
 
 

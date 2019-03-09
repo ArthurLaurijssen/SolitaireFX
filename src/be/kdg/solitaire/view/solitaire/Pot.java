@@ -13,7 +13,6 @@ class Pot extends HBox {
 
 
     Pot(SolitaireModel model,GameView view) {
-        System.out.println(true);
         this.model = model;
         this.view = view;
         this.initialiseNodes();
@@ -27,10 +26,12 @@ class Pot extends HBox {
 
     private void layoutNodes() {
         this.setSpacing(40);
-        this.pot.setFitHeight(150);
+        this.setSizes(this.pot);
+        this.setSizes(this.potCardShown);
+        /*this.pot.setFitHeight(150);
         this.pot.setFitWidth(100);
         this.potCardShown.setFitWidth(100);
-        this.potCardShown.setFitHeight(150);
+        this.potCardShown.setFitHeight(150);*/
         this.getChildren().add(this.pot);
         this.getChildren().add(this.potCardShown);
     }
@@ -39,15 +40,19 @@ class Pot extends HBox {
         return pot;
     }
 
+    private void setSizes(ImageView imageView) {
+        imageView.setFitHeight(150);
+        imageView.setFitWidth(100);
+    }
+
     void switchPot(Card c) {
-        if (this.getChildren().size() >= 2) {
-            this.getChildren().remove(1);
-        }
-        this.potCardShown = new ImageView(model.getDeck().getImages().getimage(c));
-        this.potCardShown.setFitHeight(150);
-        this.potCardShown.setFitWidth(100);
+        //this.getChildren().remove(1);
+        //this.potCardShown = new ImageView(model.getDeck().getImages().getimage(c));
+        //this.potCardShown.setFitHeight(150);
+        //this.potCardShown.setFitWidth(100);
+        //this.getChildren().add(1,this.potCardShown);
+        this.potCardShown.setImage(model.getDeck().getImages().getimage(c));
         this.view.getPresenter().potAddEventHandlers(this.potCardShown,c);
-        this.getChildren().add(1,this.potCardShown);
     }
 
 }
