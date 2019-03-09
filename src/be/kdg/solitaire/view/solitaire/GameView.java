@@ -22,9 +22,11 @@ class GameView extends GridPane {
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
     private final SolitairePresenter presenter;
+    private SolitaireView vboxView;
 
-    GameView(SolitaireModel model) {
+    GameView(SolitaireModel model,SolitaireView vboxView) {
         this.model = model;
+        this.vboxView = vboxView;
         this.imageViewCardMap = new HashMap<>();
         this.initialiseNodes();
         this.presenter= new SolitairePresenter(this,model);
@@ -106,6 +108,8 @@ class GameView extends GridPane {
 
     void updateFoundations(String id,int source) {
         Card c = model.getDeck().idToCard(id);
+        model.cardAddedToFoundation();
+        this.vboxView.getScore().setText("Score:\t" + model.getScore() +"\t");
         if (source ==-1) {
             model.getDeck().getCards().remove(c);
             model.getDeck().getVerdeeld().add(c);
@@ -168,5 +172,7 @@ class GameView extends GridPane {
         }
     }
 
-
+    SolitaireView getVboxView() {
+        return vboxView;
+    }
 }

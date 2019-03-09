@@ -46,11 +46,8 @@ class Pot extends HBox {
     }
 
     void switchPot(Card c) {
-        //this.getChildren().remove(1);
-        //this.potCardShown = new ImageView(model.getDeck().getImages().getimage(c));
-        //this.potCardShown.setFitHeight(150);
-        //this.potCardShown.setFitWidth(100);
-        //this.getChildren().add(1,this.potCardShown);
+        model.stappelKlik();
+        view.getVboxView().getScore().setText(model.getScore());
         this.potCardShown.setImage(model.getDeck().getImages().getimage(c));
         this.view.getPresenter().potAddEventHandlers(this.potCardShown,c);
     }

@@ -3,20 +3,26 @@ package be.kdg.solitaire.view.solitaire;
 import be.kdg.solitaire.model.Cards.Card;
 import be.kdg.solitaire.model.Cards.Ranks;
 import be.kdg.solitaire.model.SolitaireModel;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 
 public class SolitairePresenter {
     private final GameView view;
     private final SolitaireModel model;
-    private int source;
+    private int source,tijd;
     private Card cardBeingDragged;
     private HashMap<ImageView,StapelPane> emptyPanes;
     private boolean multipleCards;
+
+    private Timeline timeline;
 
     SolitairePresenter(GameView view, SolitaireModel model) {
         this.view = view;
@@ -24,6 +30,7 @@ public class SolitairePresenter {
         this.addEventHandlers();
         this.updateView();
         emptyPanes = new HashMap<>();
+        this.startTimer();
     }
     private void addEventHandlers() {
         view.getPot().getPotImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -176,5 +183,31 @@ public class SolitairePresenter {
                 event.consume();
             }
         };
+    }
+
+    private void startTimer() {
+            this.tijd = 0;
+            this.timeline = new Timeline();
+            this.timeline.setCycleCount(Timeline.INDEFINITE); // Anders maar 1 keer
+            this.timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    tijd++;
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("Time:\t");
+                    stringBuilder.append(tijd/60);
+                    stringBuilder.append(":");
+                    if (tijd%60 <10) {
+                        stringBuilder.append("0");
+                    }
+                    if (tijd%60 ==0) {
+                        model.minutePassed();
+                        view.getVboxView().getScore().setText(model.getScore());
+                    }
+                    stringBuilder.append(tijd%60);
+                    view.getVboxView().getTijd().setText(stringBuilder.toString());
+                }
+            }));
+        timeline.playFromStart(); // Om de eventhandler aan te spreken
     }
 }
