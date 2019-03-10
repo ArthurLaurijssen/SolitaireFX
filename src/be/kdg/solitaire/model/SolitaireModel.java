@@ -4,7 +4,7 @@ import be.kdg.solitaire.model.Cards.Deck;
 
 public class SolitaireModel {
     private int score;
-    private final Deck deck;
+    private  Deck deck;
     public SolitaireModel() {
         deck = new Deck();
         deck.shuffle();
@@ -17,6 +17,9 @@ public class SolitaireModel {
 
     public Deck getDeck() {
         return deck;
+    }
+    public void newDeck() {
+        this.deck = new Deck();
     }
 
     public void stappelTurned() {

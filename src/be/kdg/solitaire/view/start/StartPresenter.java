@@ -34,6 +34,7 @@ public class StartPresenter {
         });
 
     }
+
     private void updateView() {
 
     }

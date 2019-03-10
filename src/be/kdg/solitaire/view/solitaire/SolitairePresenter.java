@@ -1,18 +1,23 @@
 package be.kdg.solitaire.view.solitaire;
 
 import be.kdg.solitaire.model.Cards.Card;
+import be.kdg.solitaire.model.Cards.Deck;
 import be.kdg.solitaire.model.Cards.Ranks;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.util.Duration;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class SolitairePresenter {
     private final GameView view;
@@ -36,8 +41,56 @@ public class SolitairePresenter {
         view.getPot().getPotImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Card c = model.getDeck().getNextPot();
-                view.getPot().switchPot(c);
+                if (model.getDeck().getNextPot() != null) {
+                    Card c = model.getDeck().getNextPot();
+                    view.getPot().switchPot(c);
+                }
+                else {
+                    view.getPot().potEmpty();
+                }
+            }
+        });
+        view.getVboxView().getMenuBar().getMenus().get(0).getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //New Game
+                model.newDeck();
+                view.getVboxView().newGame();
+                timeline.stop();
+            }
+        });
+        view.getVboxView().getMenuBar().getMenus().get(0).getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               //High scores
+            }
+        });
+        view.getVboxView().getMenuBar().getMenus().get(0).getItems().get(2).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //Exit
+                final Alert closeGameAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                closeGameAlert.setTitle("Close game");
+                closeGameAlert.setHeaderText("You are exiting the game are you sure?");
+                Optional<ButtonType> btnKeuze = closeGameAlert.showAndWait();
+                if (btnKeuze.get().getText().equals("OK")) {
+                    Platform.exit();
+                }
+                else {
+                    event.consume();
+                }
+            }
+        });
+        view.getVboxView().getMenuBar().getMenus().get(1).getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //Game Rules
+            }
+        });
+        view.getVboxView().getMenuBar().getMenus().get(1).getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //About
             }
         });
     }
@@ -102,7 +155,6 @@ public class SolitairePresenter {
        return new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
-                boolean success = false;
                     if (db.hasString()) {
                        Card c = model.getDeck().idToCard(db.getString());
                     if (cardTarget.kanErop(c)) {
@@ -122,9 +174,7 @@ public class SolitairePresenter {
                         }
 
                     }
-                    success = true;
                 }
-                event.setDropCompleted(success);
                 event.consume();
             }
         };
@@ -134,7 +184,7 @@ public class SolitairePresenter {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.hasString()) {
-                    if (cardBeingDragged.getRank().equals(Ranks.KONING)) {
+                   if (cardBeingDragged.getRank().equals(Ranks.KONING)) {
                         if (multipleCards) {
                             view.updateMultipleCards(emptyPanes.get(imageView).getStapel().ordinal(),source,db.getString());
                             emptyPanes.remove(imageView);

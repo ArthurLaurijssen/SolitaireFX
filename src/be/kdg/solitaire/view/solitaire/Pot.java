@@ -21,19 +21,20 @@ class Pot extends HBox {
 
     private void initialiseNodes() {
         this.pot = new ImageView(model.getDeck().getImages().getBack());
-        this.potCardShown = new ImageView(new Image("/images/square.png"));
+        this.potCardShown = new ImageView();
     }
 
     private void layoutNodes() {
+
         this.setSpacing(40);
         this.setSizes(this.pot);
         this.setSizes(this.potCardShown);
-        /*this.pot.setFitHeight(150);
-        this.pot.setFitWidth(100);
-        this.potCardShown.setFitWidth(100);
-        this.potCardShown.setFitHeight(150);*/
         this.getChildren().add(this.pot);
         this.getChildren().add(this.potCardShown);
+        this.potEmpty();
+    }
+    void potEmpty() {
+        this.potCardShown.setImage(new Image("/images/square.png"));
     }
 
     ImageView getPotImageView() {

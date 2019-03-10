@@ -66,8 +66,8 @@ class GameView extends GridPane {
 
         //gridpane
         this.setHgap(200);
-        this.setVgap(130);
-        this.setPadding(new Insets(25,50,50,30));
+        this.setVgap(80);
+        this.setPadding(new Insets(15,75,50,75));
 
 
     }
@@ -109,7 +109,7 @@ class GameView extends GridPane {
     void updateFoundations(String id,int source) {
         Card c = model.getDeck().idToCard(id);
         model.cardAddedToFoundation();
-        this.vboxView.getScore().setText("Score:\t" + model.getScore() +"\t");
+        this.vboxView.getScore().setText(model.getScore());
         if (source ==-1) {
             model.getDeck().getCards().remove(c);
             model.getDeck().getVerdeeld().add(c);
@@ -159,12 +159,13 @@ class GameView extends GridPane {
             Card c = model.getDeck().idToCard(id);
             model.getDeck().getCards().remove(c);
             model.getDeck().getVerdeeld().add(c);
-            c =model.getDeck().getPreviousPot();
-            if (c!=null) {
+            if (model.getDeck().getPreviousPot()!=null) {
+                c = model.getDeck().getPreviousPot();
                 this.hboxPot.switchPot(c);
             }
             else {
-                this.hboxPot.getChildren().remove(1);
+                System.out.println("Pot legen");
+                this.hboxPot.potEmpty();
             }
         }
         else if (stapelPanes.get(source).getCardsOnStapel().contains(model.getDeck().idToCard(id))) {
