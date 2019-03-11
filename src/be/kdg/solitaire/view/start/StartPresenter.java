@@ -2,7 +2,6 @@ package be.kdg.solitaire.view.start;
 
 
 import be.kdg.solitaire.model.SolitaireModel;
-import be.kdg.solitaire.view.solitaire.SolitairePresenter;
 import be.kdg.solitaire.view.solitaire.SolitaireView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -29,7 +28,11 @@ public class StartPresenter {
             @Override
             public void handle(ActionEvent event) {
                 SolitaireView solitaireView = new SolitaireView(model);
+                view.getScene().getWindow().setHeight(800);
+                view.getScene().getWindow().setWidth(1300);
+                view.getScene().getWindow().centerOnScreen();
                 view.getScene().setRoot(solitaireView);
+
             }
         });
 

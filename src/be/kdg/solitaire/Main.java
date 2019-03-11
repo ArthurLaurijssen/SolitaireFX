@@ -39,8 +39,8 @@ public class Main extends Application {
                 }
             }
         });
-        primaryStage.setWidth(1300);
-        primaryStage.setHeight(800);
+        primaryStage.setWidth(700);
+        primaryStage.setHeight(400);
         primaryStage.setScene(scene);
         primaryStage.setTitle(title);
         primaryStage.show();

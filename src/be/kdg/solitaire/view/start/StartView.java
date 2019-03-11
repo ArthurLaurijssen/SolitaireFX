@@ -2,17 +2,21 @@ package be.kdg.solitaire.view.start;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class StartView extends BorderPane {
+
+public class StartView extends HBox {
     private Button btnNewGame,btnExit;
-    private HBox hbox;
-    private VBox vbox;
+    private HBox hBoxButtons;
+    private VBox vBoxHighScores;
     private Label lblHighScores;
+    private Canvas canvasLine;
+
     public StartView() {
         this.initialiseNodes();
         this.layoutNodes();
@@ -21,21 +25,38 @@ public class StartView extends BorderPane {
     private void initialiseNodes() {
         this.btnNewGame = new Button("Start Game");
         this.btnExit = new Button("Exit");
-        this.hbox = new HBox(75);
-        this.vbox = new VBox(20);
+        this.hBoxButtons = new HBox();
+        this.vBoxHighScores = new VBox();
         this.lblHighScores = new Label("High Scores");
+        this.canvasLine = new Canvas(10,400);
     }
 
     private void layoutNodes() {
-        this.hbox.getChildren().addAll(this.btnNewGame,this.btnExit);
-        this.vbox.getChildren().add(this.lblHighScores);
-        this.setLeft(this.hbox);
-        this.setRight(this.vbox);
-        this.hbox.setAlignment(Pos.CENTER);
-        this.lblHighScores.setPadding(new Insets(10,150,40,100));
-        this.setPadding(new Insets(20,20,40,100));
-        this.btnNewGame.setPadding(new Insets(15));
-        this.btnExit.setPadding(new Insets(15));
+        //Hbox Buttons
+        this.hBoxButtons.getChildren().addAll(this.btnNewGame,this.btnExit);
+        this.hBoxButtons.setAlignment(Pos.CENTER);
+        this.hBoxButtons.setSpacing(40);
+
+        //Canvas
+        GraphicsContext gc = canvasLine.getGraphicsContext2D();
+        gc.setLineWidth(2.5);
+        gc.strokeLine(0,0,0,400);
+
+        //HighScores
+        this.vBoxHighScores.getChildren().add(this.lblHighScores);
+
+
+
+        //This
+        this.getChildren().add(this.hBoxButtons);
+        this.getChildren().add(canvasLine);
+        this.getChildren().add(this.vBoxHighScores);
+        this.setSpacing(50);
+
+
+
+        //this.lblHighScores.setPadding(new Insets(10,150,40,100));
+        this.setPadding(new Insets(0,20,0,80));
 
     }
 

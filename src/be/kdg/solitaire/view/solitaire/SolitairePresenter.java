@@ -1,7 +1,6 @@
 package be.kdg.solitaire.view.solitaire;
 
 import be.kdg.solitaire.model.Cards.Card;
-import be.kdg.solitaire.model.Cards.Deck;
 import be.kdg.solitaire.model.Cards.Ranks;
 import be.kdg.solitaire.model.SolitaireModel;
 import javafx.animation.KeyFrame;
@@ -10,10 +9,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.HashMap;
@@ -85,6 +86,12 @@ public class SolitairePresenter {
             @Override
             public void handle(ActionEvent event) {
                 //Game Rules
+                final Stage stage = new Stage();
+                PopUpGameRules popUpGameRules = new PopUpGameRules();
+                Scene scene = new Scene(popUpGameRules);
+                stage.setTitle("Game Rules");
+                stage.setScene(scene);
+                stage.show();
             }
         });
         view.getVboxView().getMenuBar().getMenus().get(1).getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
@@ -224,8 +231,7 @@ public class SolitairePresenter {
                             gewonnen = true;
                         }
                         if (gewonnen) {
-                            //Code als je gewonnen bent
-                            System.out.println("Gewonnen");
+
                         }
                     }
 
@@ -250,7 +256,7 @@ public class SolitairePresenter {
                     if (tijd%60 <10) {
                         stringBuilder.append("0");
                     }
-                    if (tijd%60 ==0) {
+                    if (tijd%60 == 0) {
                         model.minutePassed();
                         view.getVboxView().getScore().setText(model.getScore());
                     }

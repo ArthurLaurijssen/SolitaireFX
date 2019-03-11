@@ -22,7 +22,7 @@ class GameView extends GridPane {
     private List<StapelPane> stapelPanes;
     private List<FoundationPane> foundationPanes;
     private final SolitairePresenter presenter;
-    private SolitaireView vboxView;
+    private final SolitaireView vboxView;
 
     GameView(SolitaireModel model,SolitaireView vboxView) {
         this.model = model;
@@ -50,7 +50,7 @@ class GameView extends GridPane {
         for (StapelPane stapelPane: stapelPanes) {
             this.hboxStapels.getChildren().add(stapelPane);
         }
-        this.hboxStapels.setSpacing(40);
+        this.hboxStapels.setSpacing(45);
         this.add(this.hboxStapels,0,1,2,1);
 
         //4 foundation stappels
@@ -113,13 +113,18 @@ class GameView extends GridPane {
         if (source ==-1) {
             model.getDeck().getCards().remove(c);
             model.getDeck().getVerdeeld().add(c);
-            Card c1 = model.getDeck().getPreviousPot();
-            this.hboxPot.switchPot(c1);
             for (FoundationPane pane : foundationPanes) {
                 if (pane.getSuit().equals(c.getSuit())) {
                     pane.addCard(c);
                     break;
                 }
+            }
+            if (model.getDeck().getPreviousPot()!=null) {
+                c = model.getDeck().getPreviousPot();
+                this.hboxPot.switchPot(c);
+            }
+            else {
+                this.hboxPot.potEmpty();
             }
         }
         else {
@@ -164,7 +169,6 @@ class GameView extends GridPane {
                 this.hboxPot.switchPot(c);
             }
             else {
-                System.out.println("Pot legen");
                 this.hboxPot.potEmpty();
             }
         }
