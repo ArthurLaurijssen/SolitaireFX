@@ -2,10 +2,9 @@ package be.kdg.solitaire.view.solitaire;
 
 import javafx.scene.layout.VBox;
 
-class PopUpGameRules extends VBox {
+class PopUpHighscores extends VBox {
 
-    PopUpGameRules() {
-
+    PopUpHighscores() {
         this.initialiseNodes();
         this.layoutNodes();
     }
@@ -13,7 +12,6 @@ class PopUpGameRules extends VBox {
 
     }
     private void layoutNodes(){
-
 
     }
 }

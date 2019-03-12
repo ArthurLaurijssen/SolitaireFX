@@ -64,6 +64,12 @@ public class SolitairePresenter {
             @Override
             public void handle(ActionEvent event) {
                //High scores
+                final Stage stage = new Stage();
+                PopUpHighscores popUpHighscores = new PopUpHighscores();
+                Scene scene = new Scene(popUpHighscores);
+                stage.setTitle("High scores");
+                stage.setScene(scene);
+                stage.show();
             }
         });
         view.getVboxView().getMenuBar().getMenus().get(0).getItems().get(2).setOnAction(new EventHandler<ActionEvent>() {
@@ -98,6 +104,12 @@ public class SolitairePresenter {
             @Override
             public void handle(ActionEvent event) {
                 //About
+                final Stage stage = new Stage();
+                PopUpAbout popUpAbout = new PopUpAbout();
+                Scene scene = new Scene(popUpAbout);
+                stage.setTitle("You won");
+                stage.setScene(scene);
+                stage.show();
             }
         });
     }
@@ -231,7 +243,12 @@ public class SolitairePresenter {
                             gewonnen = true;
                         }
                         if (gewonnen) {
-
+                            final Stage stage = new Stage();
+                            PopUpWon popUpWon = new PopUpWon();
+                            Scene scene = new Scene(popUpWon);
+                            stage.setTitle("Congratulations you won");
+                            stage.setScene(scene);
+                            stage.show();
                         }
                     }
 
