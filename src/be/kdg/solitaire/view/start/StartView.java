@@ -6,16 +6,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
 public class StartView extends HBox {
     private Button btnNewGame,btnExit;
-    private HBox hBoxButtons;
-    private VBox vBoxHighScores;
-    private Label lblHighScores;
+    private HBox hBoxButtons,hBoxTextfield;
+    private VBox vBoxHighScores,vBoxButtons;
+    private Label lblHighScores,lblSpeler,lblError;
     private Canvas canvasLine;
+    private TextField textField;
 
     public StartView() {
         this.initialiseNodes();
@@ -29,13 +31,31 @@ public class StartView extends HBox {
         this.vBoxHighScores = new VBox();
         this.lblHighScores = new Label("High Scores");
         this.canvasLine = new Canvas(10,400);
+        this.textField = new TextField();
+        this.vBoxButtons = new VBox();
+        this.lblSpeler = new Label("Name:");
+        this.hBoxTextfield = new HBox();
+        this.lblError = new Label();
     }
 
     private void layoutNodes() {
+
         //Hbox Buttons
         this.hBoxButtons.getChildren().addAll(this.btnNewGame,this.btnExit);
-        this.hBoxButtons.setAlignment(Pos.CENTER);
         this.hBoxButtons.setSpacing(40);
+
+        //Hbox Textfield
+        this.textField.setMaxWidth(135);
+        this.hBoxTextfield.setSpacing(20);
+        this.hBoxTextfield.getChildren().add(this.lblSpeler);
+        this.hBoxTextfield.getChildren().add(this.textField);
+
+        //Vbox Buttons
+        this.vBoxButtons.getChildren().add(this.lblError);
+        this.vBoxButtons.getChildren().add(this.hBoxTextfield);
+        this.vBoxButtons.getChildren().add(this.hBoxButtons);
+        this.vBoxButtons.setSpacing(20);
+        this.vBoxButtons.setAlignment(Pos.CENTER);
 
         //Canvas
         GraphicsContext gc = canvasLine.getGraphicsContext2D();
@@ -45,10 +65,8 @@ public class StartView extends HBox {
         //HighScores
         this.vBoxHighScores.getChildren().add(this.lblHighScores);
 
-
-
         //This
-        this.getChildren().add(this.hBoxButtons);
+        this.getChildren().add(this.vBoxButtons);
         this.getChildren().add(canvasLine);
         this.getChildren().add(this.vBoxHighScores);
         this.setSpacing(50);
@@ -66,5 +84,12 @@ public class StartView extends HBox {
 
     Button getBtnExit() {
         return btnExit;
+    }
+
+    Label getLblError() {
+        return lblError;
+    }
+    TextField getTextField() {
+        return textField;
     }
 }

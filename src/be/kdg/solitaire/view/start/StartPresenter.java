@@ -27,11 +27,17 @@ public class StartPresenter {
         view.getBtnNewGame().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SolitaireView solitaireView = new SolitaireView(model);
-                view.getScene().getWindow().setHeight(800);
-                view.getScene().getWindow().setWidth(1300);
-                view.getScene().getWindow().centerOnScreen();
-                view.getScene().setRoot(solitaireView);
+                if (!view.getTextField().getText().isEmpty()) {
+                    SolitaireView solitaireView = new SolitaireView(model);
+                    model.setPlayerName(view.getTextField().getText());
+                    view.getScene().getWindow().setHeight(800);
+                    view.getScene().getWindow().setWidth(1300);
+                    view.getScene().getWindow().centerOnScreen();
+                    view.getScene().setRoot(solitaireView);
+                }
+                else {
+                    view.getLblError().setText("Naam mag niet leeg zijn!!");
+                }
 
             }
         });

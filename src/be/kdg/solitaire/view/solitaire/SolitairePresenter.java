@@ -20,7 +20,7 @@ import javafx.util.Duration;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class SolitairePresenter {
+class SolitairePresenter {
     private final GameView view;
     private final SolitaireModel model;
     private int source,tijd;
@@ -38,6 +38,7 @@ public class SolitairePresenter {
         emptyPanes = new HashMap<>();
         this.startTimer();
     }
+
     private void addEventHandlers() {
         view.getPot().getPotImageView().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -238,17 +239,19 @@ public class SolitairePresenter {
                         boolean gewonnen =false;
                         for (FoundationPane pane:view.getFoundationPanes()) {
                             if (pane.getHighestRank()==null || !pane.getHighestRank().equals(Ranks.KONING)) {
+                                gewonnen = false;
                                 break;
                             }
                             gewonnen = true;
                         }
                         if (gewonnen) {
                             final Stage stage = new Stage();
-                            PopUpWon popUpWon = new PopUpWon();
+                            PopUpWon popUpWon = new PopUpWon(model,tijd);
                             Scene scene = new Scene(popUpWon);
                             stage.setTitle("Congratulations you won");
                             stage.setScene(scene);
                             stage.show();
+                            model.gewonnen(tijd);
                         }
                     }
 
