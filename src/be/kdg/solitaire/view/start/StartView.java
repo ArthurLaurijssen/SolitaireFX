@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import sun.jvm.hotspot.runtime.posix.POSIXSignals;
 
 
 public class StartView extends HBox {
@@ -49,6 +50,7 @@ public class StartView extends HBox {
         this.hBoxTextfield.setSpacing(20);
         this.hBoxTextfield.getChildren().add(this.lblSpeler);
         this.hBoxTextfield.getChildren().add(this.textField);
+        this.lblError.getStyleClass().add("label-start");
 
         //Vbox Buttons
         this.vBoxButtons.getChildren().add(this.lblError);
@@ -64,18 +66,43 @@ public class StartView extends HBox {
 
         //HighScores
         this.vBoxHighScores.getChildren().add(this.lblHighScores);
+        this.vBoxHighScores.setSpacing(30);
+        this.vBoxHighScores.setAlignment(Pos.CENTER);
 
         //This
         this.getChildren().add(this.vBoxButtons);
         this.getChildren().add(canvasLine);
         this.getChildren().add(this.vBoxHighScores);
-        this.setSpacing(50);
-
-
+        this.setSpacing(100);
 
         //this.lblHighScores.setPadding(new Insets(10,150,40,100));
         this.setPadding(new Insets(0,20,0,80));
 
+        //css
+        this.btnNewGame.getStyleClass().add("start-btn");
+        this.btnExit.getStyleClass().add("start-btn");
+        this.getStyleClass().add("start-container");
+
+        this.lblHighScores.getStyleClass().add("label-highscores");
+        this.highscores("francis", 95,1);
+        this.highscores("Arthur", 94,2);
+        this.highscores("Mats", 88,3);
+        this.highscores("Diego", 70,4);
+        this.highscores("Laura", 55,5);
+    }
+
+    void highscores(String name, int score,int pos){
+        Label hcName = new Label(name);
+        Label hcScore = new Label(Integer.toString(score));
+        Label posi = new Label(Integer.toString(pos));
+        hcName.getStyleClass().add("label-highscores");
+        hcScore.getStyleClass().add("label-highscores");
+        posi.getStyleClass().add("label-highscores");
+        HBox hcLine = new HBox();
+        hcLine.getChildren().add(posi);
+        hcLine.getChildren().addAll(hcName, hcScore);
+        hcLine.getStyleClass().add("hc-line");
+        vBoxHighScores.getChildren().add(hcLine);
     }
 
     Button getBtnNewGame() {
@@ -92,4 +119,5 @@ public class StartView extends HBox {
     TextField getTextField() {
         return textField;
     }
+
 }

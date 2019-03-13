@@ -13,7 +13,8 @@ public enum Ranks {
         return values[(this.ordinal()-1) % values.length];
     }
     public boolean hasNext() {
-        return this != KONING; }
+        return this != KONING;
+    }
     public Ranks getNext() {
         return values[(this.ordinal()+1) % values.length];
     }

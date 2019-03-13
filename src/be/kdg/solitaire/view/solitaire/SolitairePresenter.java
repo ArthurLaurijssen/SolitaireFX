@@ -66,7 +66,7 @@ class SolitairePresenter {
             public void handle(ActionEvent event) {
                //High scores
                 final Stage stage = new Stage();
-                PopUpHighscores popUpHighscores = new PopUpHighscores();
+                PopUpHighscores popUpHighscores = new PopUpHighscores(model);
                 Scene scene = new Scene(popUpHighscores);
                 stage.setTitle("High scores");
                 stage.setScene(scene);
